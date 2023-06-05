@@ -1,0 +1,33 @@
+version: '3.5'
+
+services:
+  
+  backend:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    volumes:
+      - ./:/app
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    tty: true
+    command: >
+      sh -c "yarn 
+      && yarn start:dev"
+    depends_on:
+      - db
+  
+  db:
+    image: mariadb:10.7
+    environment:
+      MYSQL_ROOT_PASSWORD: AsU%9BVe25JRF&4z
+      MYSQL_DATABASE: emergencias
+    volumes:
+      - maria-data:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+volumes:
+  maria-data:
+    driver: local 
